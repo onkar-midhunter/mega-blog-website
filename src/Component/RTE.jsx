@@ -1,5 +1,23 @@
 import React from "react";
 import { Editor } from "@tinymce/tinymce-react";
+import "tinymce/tinymce";
+import "tinymce/icons/default";
+import "tinymce/themes/silver";
+import "tinymce/models/dom";
+
+// Import plugins you want
+import "tinymce/plugins/advlist";
+import "tinymce/plugins/autolink";
+import "tinymce/plugins/lists";
+import "tinymce/plugins/link";
+import "tinymce/plugins/image";
+import "tinymce/plugins/charmap";
+import "tinymce/plugins/preview";
+import "tinymce/plugins/code";
+import "tinymce/plugins/table";
+import "tinymce/skins/ui/oxide/skin.min.css";
+import "tinymce/skins/content/default/content.min.css";
+import "tinymce/skins/content/default/content.css";
 import { Controller } from "react-hook-form";
 
 function RTE({ name, control, label, defaultValue = "" }) {
@@ -11,36 +29,16 @@ function RTE({ name, control, label, defaultValue = "" }) {
         control={control}
         render={({ field: { onChange } }) => (
           <Editor
-            apiKey="frkpxciqnon43phcjln0vyi17zj2anmdh6r7kddiom8crnyx"
+            apiKey="" // not needed when self-hosting
             initialValue={defaultValue}
             init={{
+              license_key: "gpl", // 👈 add this line
               height: 500,
               menubar: true,
-              plugins: [
-                "image",
-                "advlist",
-                "autolink",
-                "lists",
-                "link",
-                "charmap",
-                "preview",
-                "anchor",
-                "searchreplace",
-                "visualblocks",
-                "code",
-                "fullscreen",
-                "insertdatetime",
-                "media",
-                "table",
-                "help",
-                "wordcount",
-              ],
+              plugins:
+                "advlist autolink lists link image charmap preview code table",
               toolbar:
-                "undo redo | blocks | image | bold italic forecolor | " +
-                "alignleft aligncenter alignright alignjustify | " +
-                "bullist numlist outdent indent | removeformat | help",
-              content_style:
-                "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+                "undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | removeformat",
             }}
             onEditorChange={onChange}
           />
