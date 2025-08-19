@@ -69,15 +69,7 @@ npm run dev
 npm run dev       # Start Vite dev server
 npm run build     # Production build
 npm run preview   # Preview production build locally
-npm run lint      # Lint the project
-🧭 Usage Flow
+npm run lint      # Lint the project 
+```
 
-Sign Up / Log In (Appwrite Email+Password)
-
-Create Post (Title, Content via RTE, Upload image, Status)
-
-List / Read Posts (Home / All Posts)
-
-Edit / Delete your own posts
-
-Only posts with status = active are listed by default
+## 🧭 Usage Flow (Recommended)
