@@ -13,6 +13,7 @@ import Post from './Pages/Post.jsx'
 import EditPost from './Pages/EditPost.jsx'
 import AddPost from './Pages/AddPost.jsx'
 import Home from './Pages/Home.jsx'
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const router = createBrowserRouter([
   {
@@ -75,7 +76,9 @@ const router = createBrowserRouter([
 ])
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+
     <Provider store={store}>
+        <SpeedInsights/>
        <RouterProvider router={router}/>
     </Provider>
     
