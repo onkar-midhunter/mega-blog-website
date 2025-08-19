@@ -11,7 +11,7 @@ function RTE({ name, control, label, defaultValue = "" }) {
         control={control}
         render={({ field: { onChange } }) => (
           <Editor
-            apiKey="" // leave empty for self-hosted
+            apiKey="frkpxciqnon43phcjln0vyi17zj2anmdh6r7kddiom8crnyx"
             initialValue={defaultValue}
             init={{
               height: 500,
