@@ -1,5 +1,15 @@
 
 ---
+## 🧭 Usage Flow (Recommended)
+
+👉 Check out the live demo here: [Mega Blog Website](https://mega-blog-website-ten.vercel.app/)
+
+1. **Sign Up / Log In** using your email and password.  
+2. **Create Posts** with title, content, and featured image.  
+3. **View Posts** on the homepage (only active ones are shown).  
+4. **Edit/Delete** your own posts anytime.  
+5. **Log Out** when done.  
+
 
 ## 🔧 Prerequisites
 
@@ -72,4 +82,4 @@ npm run preview   # Preview production build locally
 npm run lint      # Lint the project 
 ```
 
-## 🧭 Usage Flow (Recommended)
+
