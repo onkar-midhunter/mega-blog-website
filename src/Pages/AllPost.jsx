@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Container, PostCard } from '../Component/index'
-import service from '../appWrite/config'
+import {LoadingScreen} from '../Component/index';
 import { useSelector } from 'react-redux'
 
 function AllPosts() {
@@ -42,9 +42,7 @@ function AllPosts() {
         return (
             <div className='w-full py-8'>
                 <Container>
-                    <div className="text-center py-10 text-xl font-semibold">
-                        Loading posts...
-                    </div>
+                    <LoadingScreen/>
                 </Container>
             </div>
         )

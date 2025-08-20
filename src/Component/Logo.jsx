@@ -1,8 +1,9 @@
 import React from 'react'
+import logo from '../assets/MegaBlogLogo.png'
 
 function Logo({width = '100px'}) {
   return (
-    <div>Logo</div>
+     <img src={logo} alt="MegaBlog Logo" style={{ width }} />
   )
 }
 

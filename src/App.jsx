@@ -3,7 +3,7 @@ import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
 import authService from "./appWrite/auth";
 import { login, logout } from "./store/authSlice";
-import { Footer, Header } from "./Component";
+import { Footer, Header, LoginPrompt } from "./Component";
 import { Outlet } from "react-router-dom";
 import service from "./appWrite/config";
 import { fetchPostsFailure, fetchPostsStart, fetchPostsSuccess } from "./store/PostSlice";
@@ -56,15 +56,15 @@ useEffect(() => {
       <div className="w-full block">
         <Header />
         <main>
-          Todo <Outlet />
+           <Outlet />
         </main>
         <Footer />
       </div>
     </div>
   ) : (
-    <div className="min-h-screen bg-amber-950">
-      <h1>loading screen</h1>
-    </div>
+   <>
+   <LoginPrompt/>
+   </>
   );
 }
 

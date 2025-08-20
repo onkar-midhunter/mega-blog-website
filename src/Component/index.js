@@ -12,6 +12,9 @@ import PostFrom from "./Post-Form/PostForm";
 import Login  from "./Login"
 import SignUp from "../Component/SignUp"
 import AuthLayout from "./AuthLayout"
+import LoadingScreen from "./Loading";
+import LoginPrompt
+ from "./LoginPrompt";
 
 export {
   Header,
@@ -26,7 +29,9 @@ export {
   RTE,
   SignUp,
   Login,
-  AuthLayout
+  AuthLayout,
+  LoadingScreen,
+  LoginPrompt
 
 
 }
