@@ -1,15 +1,13 @@
 import React from "react";
 import service from "../appWrite/config";
 import { Link } from "react-router-dom";
-import { format } from "date-fns"; // for pretty date formatting
-import authService from "../appWrite/auth";
+import { format } from "date-fns";
+import { User } from "lucide-react"; // for author icon
 
-function PostCard({ $id, title, featuredImage,  $createdAt }) {
-  
-
+function PostCard({ $id, title, featuredImage, $createdAt, authorName }) {
   return (
     <Link to={`/post/${$id}`}>
-      <div className="w-72 h-88 bg-white rounded-2xl shadow-md hover:shadow-2xl hover:scale-105 transition-all duration-300 overflow-hidden flex flex-col">
+      <div className="w-72 h-96 bg-white rounded-2xl shadow-md hover:shadow-2xl hover:scale-105 transition-all duration-300 overflow-hidden flex flex-col">
         {/* Image */}
         <div className="h-44 w-full">
           <img
@@ -22,14 +20,24 @@ function PostCard({ $id, title, featuredImage,  $createdAt }) {
         {/* Content */}
         <div className="p-4 flex-1 flex flex-col justify-between">
           {/* Title */}
-          <h2 className="text-lg font-semibold text-gray-800 hover:text-amber-600 line-clamp-2">
+          <h2 className="text-lg font-semibold text-gray-800 hover:text-amber-600 line-clamp-2 mb-3">
             {title}
           </h2>
 
           {/* Meta Info */}
-          <div className="mt-3 flex items-center justify-between text-sm text-gray-500">
+          <div className="space-y-2">
+            {/* Author */}
+            {authorName && (
+              <div className="flex items-center gap-2 text-sm text-gray-600">
+                <User className="w-4 h-4" />
+                <span>By {authorName}</span>
+              </div>
+            )}
             
-            <span>{format(new Date($createdAt), "MMM dd, yyyy")}</span>
+            {/* Date */}
+            <div className="text-sm text-gray-500">
+              <span>{format(new Date($createdAt), "MMM dd, yyyy")}</span>
+            </div>
           </div>
         </div>
       </div>

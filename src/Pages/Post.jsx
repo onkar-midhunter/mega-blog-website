@@ -86,9 +86,17 @@ function Post() {
           <div className="lg:w-1/2 flex flex-col">
             <div className="mb-6">
               <h1 className="text-3xl font-bold mb-2">{post.title}</h1>
-              <p className="text-sm text-black">
-                Published on {new Date(post.$createdAt).toLocaleDateString()}
-              </p>
+              <div className="text-sm text-gray-600 space-y-1">
+                {post.authorName && (
+                  <p className="flex items-center gap-2">
+                    <span className="font-medium">By:</span>
+                    <span className="text-amber-600 font-semibold">{post.authorName}</span>
+                  </p>
+                )}
+                <p>
+                  Published on {new Date(post.$createdAt).toLocaleDateString()}
+                </p>
+              </div>
             </div>
             <div className="prose prose-lg flex-1">{parse(post.content)}</div>
           </div>

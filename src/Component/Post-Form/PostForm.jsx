@@ -20,7 +20,10 @@ function PostForm({ post }) {
   const navigate = useNavigate();
   const userData = useSelector((state) => state.auth.userData);
   
-  const userId = userData?.userData?.$id || userData?.$id;
+  // Handle both userData structures
+  const actualUserData = userData?.userData || userData;
+  const userId = actualUserData?.$id;
+  const userName = actualUserData?.name;
 
   const submit = async (data) => {
     if (post) {
@@ -43,7 +46,7 @@ function PostForm({ post }) {
         navigate(`/post/${dbPost.$id}`);
       }
     } else {
-      // ✅ Create post flow
+      // ✅ Create post flow - now includes authorName
       const file = await service.uploadFile(data.image[0]);
 
       if (file) {
@@ -53,12 +56,12 @@ function PostForm({ post }) {
         const dbPost = await service.createPost({
           ...data,
           userId: userId,
+          authorName: userName, // ✅ Add author name
         });
         console.log(dbPost);
 
         if (dbPost) {
           dispatch(addPost(dbPost));
-
           navigate(`/post/${dbPost.$id}`);
         }
       }
@@ -128,7 +131,7 @@ function PostForm({ post }) {
         {post && (
           <div className="w-full mb-4">
             <img
-              src={service.getFilePreview(post.featuredImage)} // ✅ fixed here
+              src={service.getFilePreview(post.featuredImage)}
               alt={post.title}
               className="rounded-lg"
             />

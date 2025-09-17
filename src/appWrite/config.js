@@ -12,7 +12,7 @@ export class Service {
     this.bucket = new Storage(this.client);
   }
 
-  async createPost({ title, slug, content, featuredImage, status, userId }) {
+  async createPost({ title, slug, content, featuredImage, status, userId, authorName }) {
     try {
       return await this.databases.createDocument(
         conf.appwriteDatabaseId,
@@ -24,6 +24,7 @@ export class Service {
           featuredImage,
           status,
           userId,
+          authorName, // ✅ Add authorName field
         }
       );
     } catch (error) {
@@ -115,19 +116,9 @@ export class Service {
     }
   }
 
-//   getFilePreview(fileId) {
-//   return this.bucket.getFileView(
-//     conf.appwriteBucketId,
-//     fileId
-//   )
-// }
-
-// another function to transfrom into image
-getFilePreview(fileId) {
-  return `${conf.appwriteUrl}/storage/buckets/${conf.appwriteBucketId}/files/${fileId}/view?project=${conf.appwriteProjectId}`;
-}
-
-  
+  getFilePreview(fileId) {
+    return `${conf.appwriteUrl}/storage/buckets/${conf.appwriteBucketId}/files/${fileId}/view?project=${conf.appwriteProjectId}`;
+  }
 }
 
 const service = new Service();
