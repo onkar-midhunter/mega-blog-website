@@ -59,9 +59,9 @@ function App() {
  return isloading ? (
   <LoadingScreen />
 ) : (
-  <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+  <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 to-blue-50">
     <Header />
-    <main className="min-h-[calc(100vh-140px)]">
+    <main className="flex-1">
       <Outlet />
     </main>
     <Footer />
