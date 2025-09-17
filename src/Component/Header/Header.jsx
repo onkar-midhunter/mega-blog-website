@@ -6,9 +6,12 @@ import { Container, Logo, LogoutBtn } from "../index";
 
 function Header() {
   const authStatus = useSelector((state) => state.auth.status);
-  const userData = useSelector((state) => state.auth.userData?.userData);
+  const userData = useSelector((state) => state.auth.userData);
   const navigate = useNavigate();
-  console.log(userData);
+
+  // ✅ Safe console logs
+  console.log("Full userData:", userData);
+  console.log("User name:", userData?.name);
 
   const navItems = [
     { name: "Home", slug: "/", active: true },
@@ -29,7 +32,7 @@ function Header() {
             </Link>
             {userData && (
               <span className="text-white font-semibold">
-                👋 Hi, {userData.name}
+                👋 Hi, {userData?.name}
               </span>
             )}
           </div>

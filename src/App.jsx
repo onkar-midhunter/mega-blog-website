@@ -6,7 +6,11 @@ import { login, logout } from "./store/authSlice";
 import { Footer, Header, LoginPrompt } from "./Component";
 import { Outlet } from "react-router-dom";
 import service from "./appWrite/config";
-import { fetchPostsFailure, fetchPostsStart, fetchPostsSuccess } from "./store/PostSlice";
+import {
+  fetchPostsFailure,
+  fetchPostsStart,
+  fetchPostsSuccess,
+} from "./store/PostSlice";
 
 function App() {
   const [isloading, setLoading] = useState(true);
@@ -33,39 +37,35 @@ function App() {
         setLoading(false);
       });
   }, []);
-useEffect(() => {
-  const fetchPosts = async () => {
-    try {
-      dispatch(fetchPostsStart()); // 🔹 start loading
-      const allPost = await service.getPosts();
-      if (allPost?.documents) {
-        dispatch(fetchPostsSuccess(allPost.documents)); // 🔹 success
-      } else {
-        dispatch(fetchPostsFailure("No posts found"));
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        dispatch(fetchPostsStart()); // 🔹 start loading
+        const allPost = await service.getPosts();
+        if (allPost?.documents) {
+          dispatch(fetchPostsSuccess(allPost.documents)); // 🔹 success
+        } else {
+          dispatch(fetchPostsFailure("No posts found"));
+        }
+      } catch (error) {
+        dispatch(fetchPostsFailure(error.message || "Failed to fetch posts")); // 🔹 error
       }
-    } catch (error) {
-      dispatch(fetchPostsFailure(error.message || "Failed to fetch posts")); // 🔹 error
-    }
-  };
+    };
 
-  fetchPosts();
-}, [dispatch]);
+    fetchPosts();
+  }, [dispatch]);
 
-  return !isloading ? (
-    <div className="min-h-screen flex flex-wrap content-between bg-gray-400">
-      <div className="w-full block">
-        <Header />
-        <main>
-           <Outlet />
-        </main>
-        <Footer />
-      </div>
-    </div>
-  ) : (
-   <>
-   <LoginPrompt/>
-   </>
-  );
+ return isloading ? (
+  <LoginPrompt />
+) : (
+  <div className="min-h-screen flex flex-col bg-gray-400">
+    <Header />
+    <main className="flex-1">
+      <Outlet />
+    </main>
+    <Footer />
+  </div>
+);
 }
 
 export default App;

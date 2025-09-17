@@ -15,10 +15,7 @@ function Post() {
   const userData = useSelector((state) => state.auth.userData);
   const postdata = useSelector((state) => state.post?.postData || []);
 
-  const isAuthor = useMemo(() => {
-    if (!post || !userData) return false;
-    return post.userId?.toString() === userData?.userData?.$id?.toString();
-  }, [post, userData]);
+  
 
   useEffect(() => {
     const existingPost = postdata.find((p) => p.$id === slug);
@@ -46,6 +43,10 @@ function Post() {
       navigate("/");
     }
   };
+  const isAuthor = useMemo(() => {
+    if (!post || !userData) return false;
+    return post.userId?.toString() === userData?.userData?.$id?.toString();
+  }, [post, userData]);
 
   if (loading) {
     return (
@@ -64,46 +65,42 @@ function Post() {
   }
 
   return (
-    <div className="py-8">
-      <Container>
-        <div className="w-full flex justify-center mb-6 relative border rounded-xl p-2 shadow-sm bg-white">
+  <div className="py-8">
+    <Container>
+      <div className="flex flex-col lg:flex-row gap-8 min-h-[65vh]">
+        {/* Left side - Content */}
+        <div className="lg:w-1/2 flex flex-col">
+          <div className="mb-6">
+            <h1 className="text-3xl font-bold mb-2">{post.title}</h1>
+            <p className="text-sm text-black">
+              Published on {new Date(post.$createdAt).toLocaleDateString()}
+            </p>
+          </div>
+          <div className="prose prose-lg flex-1">{parse(post.content)}</div>
+        </div>
+
+        {/* Right side - Image */}
+        <div className="lg:w-2/5 relative">
           {post.featuredImage && (
             <img
               src={service.getFilePreview(post.featuredImage)}
               alt={post.title}
-              className="rounded-xl max-h-[300px] w-full object-cover object-center shadow-md"
+              className="rounded-xl h-[65vh] w-full object-cover shadow-md"
             />
           )}
           {isAuthor && (
-            <div className="absolute right-6 top-6 flex gap-2">
+            <div className="absolute right-4 top-4 flex gap-2">
               <Link to={`/edit-post/${post.$id}`}>
                 <Button bgColor="bg-green-500">Edit</Button>
               </Link>
-              <Button bgColor="bg-red-500" onClick={deletePost}>
-                Delete
-              </Button>
+              <Button bgColor="bg-red-500" onClick={deletePost}>Delete</Button>
             </div>
           )}
         </div>
-
-        {/* Title + Published Date */}
-        <div className="w-full mb-6 text-center">
-          <h1 className="text-3xl font-bold mb-2">{post.title}</h1>
-          <p className="text-sm text-black">
-            Published on{" "}
-            {new Date(post.$createdAt).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </p>
-        </div>
-
-        {/* Content */}
-        <div className="prose prose-lg max-w-none">{parse(post.content)}</div>
-      </Container>
-    </div>
-  );
+      </div>
+    </Container>
+  </div>
+);
 }
 
 export default Post;

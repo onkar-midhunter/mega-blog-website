@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
-import { Container, LoginPrompt, PostCard } from "../Component/index";
+import { Container, LoadingScreen, LoginPrompt, PostCard } from "../Component/index";
 import service from "../appWrite/config";
 
 function Home() {
   const [posts, setPosts] = useState([]);
+  const userData = useSelector((state) => state.auth.userData);
 
   useEffect(() => {
     service.getPosts().then((posts) => {
@@ -13,17 +15,20 @@ function Home() {
       }
     });
   }, []);
-  console.log(posts);
+
+  // Show login prompt if no posts
   if (posts.length === 0) {
     return (
       <div className="w-full py-8 mt-4 text-center">
         <Container>
-          <LoginPrompt/>
+         <LoadingScreen/>
         </Container>
       </div>
     );
   }
-  return (
+
+  // Show posts if user is logged in, else show login prompt
+  return userData ? (
     <div className="w-full py-8">
       <Container>
         <div className="flex flex-wrap">
@@ -35,6 +40,10 @@ function Home() {
         </div>
       </Container>
     </div>
+  ) : (
+    <Container>
+      <LoginPrompt />
+    </Container>
   );
 }
 
