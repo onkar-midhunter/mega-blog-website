@@ -15,8 +15,6 @@ function Post() {
   const userData = useSelector((state) => state.auth.userData);
   const postdata = useSelector((state) => state.post?.postData || []);
 
-  
-
   useEffect(() => {
     const existingPost = postdata.find((p) => p.$id === slug);
     if (existingPost) {
@@ -43,9 +41,25 @@ function Post() {
       navigate("/");
     }
   };
+
+  // ✅ Fixed: Handle both userData structures
   const isAuthor = useMemo(() => {
     if (!post || !userData) return false;
-    return post.userId?.toString() === userData?.userData?.$id?.toString();
+    
+    // Handle both possible userData structures
+    const actualUserData = userData?.userData || userData;
+    const currentUserId = actualUserData?.$id?.toString();
+    const postUserId = post.userId?.toString();
+    
+    // Add debugging logs
+    console.log("🔍 Author check:");
+    console.log("userData structure:", userData);
+    console.log("actualUserData:", actualUserData);
+    console.log("currentUserId:", currentUserId);
+    console.log("postUserId:", postUserId);
+    console.log("isAuthor result:", currentUserId === postUserId);
+    
+    return currentUserId === postUserId;
   }, [post, userData]);
 
   if (loading) {
@@ -65,42 +79,42 @@ function Post() {
   }
 
   return (
-  <div className="py-8">
-    <Container>
-      <div className="flex flex-col lg:flex-row gap-8 min-h-[65vh]">
-        {/* Left side - Content */}
-        <div className="lg:w-1/2 flex flex-col">
-          <div className="mb-6">
-            <h1 className="text-3xl font-bold mb-2">{post.title}</h1>
-            <p className="text-sm text-black">
-              Published on {new Date(post.$createdAt).toLocaleDateString()}
-            </p>
-          </div>
-          <div className="prose prose-lg flex-1">{parse(post.content)}</div>
-        </div>
-
-        {/* Right side - Image */}
-        <div className="lg:w-2/5 relative">
-          {post.featuredImage && (
-            <img
-              src={service.getFilePreview(post.featuredImage)}
-              alt={post.title}
-              className="rounded-xl h-[65vh] w-full object-cover shadow-md"
-            />
-          )}
-          {isAuthor && (
-            <div className="absolute right-4 top-4 flex gap-2">
-              <Link to={`/edit-post/${post.$id}`}>
-                <Button bgColor="bg-green-500">Edit</Button>
-              </Link>
-              <Button bgColor="bg-red-500" onClick={deletePost}>Delete</Button>
+    <div className="py-8">
+      <Container>
+        <div className="flex flex-col lg:flex-row gap-8 min-h-[65vh]">
+          {/* Left side - Content */}
+          <div className="lg:w-1/2 flex flex-col">
+            <div className="mb-6">
+              <h1 className="text-3xl font-bold mb-2">{post.title}</h1>
+              <p className="text-sm text-black">
+                Published on {new Date(post.$createdAt).toLocaleDateString()}
+              </p>
             </div>
-          )}
+            <div className="prose prose-lg flex-1">{parse(post.content)}</div>
+          </div>
+
+          {/* Right side - Image */}
+          <div className="lg:w-2/5 relative">
+            {post.featuredImage && (
+              <img
+                src={service.getFilePreview(post.featuredImage)}
+                alt={post.title}
+                className="rounded-xl h-[65vh] w-full object-cover shadow-md"
+              />
+            )}
+            {isAuthor && (
+              <div className="absolute right-4 top-4 flex gap-2">
+                <Link to={`/edit-post/${post.$id}`}>
+                  <Button bgColor="bg-green-500">Edit</Button>
+                </Link>
+                <Button bgColor="bg-red-500" onClick={deletePost}>Delete</Button>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-    </Container>
-  </div>
-);
+      </Container>
+    </div>
+  );
 }
 
 export default Post;
