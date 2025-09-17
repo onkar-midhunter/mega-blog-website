@@ -38,18 +38,32 @@ function RTE({ name, control, label, defaultValue = "" }) {
         control={control}
         render={({ field: { onChange } }) => (
           <Editor
-            apiKey="frkpxciqnon43phcjln0vyi17zj2anmdh6r7kddiom8crnyx"
             init={{
+              // ✅ Required for self-hosted free version
+              license_key: "gpl",
+
+              // Plugins - only community/free ones
               plugins:
-                "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount fullscreen media help quickbars code",
+                "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount fullscreen help quickbars code",
+
+              // Toolbar config
               toolbar:
                 "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap codesample | visualblocks wordcount fullscreen searchreplace help code | removeformat",
+
               menubar: "file edit view insert format tools table help",
               quickbars_selection_toolbar:
                 "bold italic | quicklink h2 h3 blockquote quickimage quicktable",
               toolbar_mode: "sliding",
+
+             
+              branding: false,
+
+            
+              emoticons_database_url:
+                "https://cdn.jsdelivr.net/npm/@tinymce/tinymce-emojis@latest/js/emojis.min.js",
             }}
             initialValue={defaultValue}
+            onEditorChange={onChange}
           />
         )}
       />
