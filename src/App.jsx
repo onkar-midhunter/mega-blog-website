@@ -3,7 +3,7 @@ import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
 import authService from "./appWrite/auth";
 import { login, logout } from "./store/authSlice";
-import { Footer, Header, LoginPrompt } from "./Component";
+import { Footer, Header, LoadingScreen } from "./Component";
 import { Outlet } from "react-router-dom";
 import service from "./appWrite/config";
 import {
@@ -37,18 +37,19 @@ function App() {
         setLoading(false);
       });
   }, []);
+  
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        dispatch(fetchPostsStart()); // 🔹 start loading
+        dispatch(fetchPostsStart());
         const allPost = await service.getPosts();
         if (allPost?.documents) {
-          dispatch(fetchPostsSuccess(allPost.documents)); // 🔹 success
+          dispatch(fetchPostsSuccess(allPost.documents));
         } else {
           dispatch(fetchPostsFailure("No posts found"));
         }
       } catch (error) {
-        dispatch(fetchPostsFailure(error.message || "Failed to fetch posts")); // 🔹 error
+        dispatch(fetchPostsFailure(error.message || "Failed to fetch posts"));
       }
     };
 
@@ -56,11 +57,11 @@ function App() {
   }, [dispatch]);
 
  return isloading ? (
-  <LoginPrompt />
+  <LoadingScreen />
 ) : (
-  <div className="min-h-screen flex flex-col bg-gray-400">
+  <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
     <Header />
-    <main className="flex-1">
+    <main className="min-h-[calc(100vh-140px)]">
       <Outlet />
     </main>
     <Footer />

@@ -10,10 +10,7 @@ function Header() {
   const navigate = useNavigate();
 
   const actualUserData = userData?.userData || userData;
-const userName = actualUserData?.name;
-  // ✅ Safe console logs
-  // console.log("Full userData:", userData);
-  // console.log("User name:", userData?.name);
+  const userName = actualUserData?.name;
 
   const navItems = [
     { name: "Home", slug: "/", active: true },
@@ -24,31 +21,37 @@ const userName = actualUserData?.name;
   ];
 
   return (
-    <header className="py-3 shadow bg-gray-500">
+    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-lg border-b border-blue-100">
       <Container>
-        <nav className="flex items-center justify-between">
-          {/* Left side: Logo + Username if logged in */}
-          <div className="flex items-center gap-4">
-            <Link to="/">
-              <Logo width="70px" />
+        <nav className="flex items-center justify-between py-4">
+          {/* Left side: Logo + Username */}
+          <div className="flex items-center gap-6">
+            <Link to="/" className="flex items-center gap-3 group">
+              <Logo width="60px" />
+              <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent group-hover:from-purple-600 group-hover:to-blue-600 transition-all duration-300">
+                MegaBlog
+              </div>
             </Link>
             {userData && (
-              <span className="text-white font-semibold">
-                👋 Hi, {userName}
-              </span>
+              <div className="hidden md:flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-50 to-purple-50 rounded-full border border-blue-200">
+                <span className="text-2xl">👋</span>
+                <span className="text-slate-700 font-medium">
+                  Hi, <span className="text-blue-600 font-semibold">{userName}</span>
+                </span>
+              </div>
             )}
           </div>
 
           {/* Right side: Navigation */}
-          <ul className="flex items-center gap-2">
-            {navItems.map((items) =>
-              items.active ? (
-                <li key={items.name}>
+          <ul className="flex items-center gap-1">
+            {navItems.map((item) =>
+              item.active ? (
+                <li key={item.name}>
                   <button
-                    className="inline-block px-6 py-2 duration-200 hover:bg-blue-100 rounded-full"
-                    onClick={() => navigate(items.slug)}
+                    className="px-5 py-2.5 text-slate-700 font-medium rounded-xl hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-500 hover:text-white transform hover:scale-105 transition-all duration-200 shadow-sm hover:shadow-md"
+                    onClick={() => navigate(item.slug)}
                   >
-                    {items.name}
+                    {item.name}
                   </button>
                 </li>
               ) : null
