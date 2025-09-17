@@ -9,9 +9,11 @@ function Header() {
   const userData = useSelector((state) => state.auth.userData);
   const navigate = useNavigate();
 
+  const actualUserData = userData?.userData || userData;
+const userName = actualUserData?.name;
   // ✅ Safe console logs
-  console.log("Full userData:", userData);
-  console.log("User name:", userData?.name);
+  // console.log("Full userData:", userData);
+  // console.log("User name:", userData?.name);
 
   const navItems = [
     { name: "Home", slug: "/", active: true },
@@ -32,7 +34,7 @@ function Header() {
             </Link>
             {userData && (
               <span className="text-white font-semibold">
-                👋 Hi, {userData?.name}
+                👋 Hi, {userName}
               </span>
             )}
           </div>
